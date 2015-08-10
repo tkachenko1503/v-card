@@ -1,5 +1,12 @@
-'use strict';
+import React from 'react';
+import Layout from './components/layout';
 
-let work = true;
+function init(node) {
+  React.render(<Layout />, node);
+}
 
-console.log(`is it work? ${work}! Yup`);
+// init on DOM loaded
+document.addEventListener("DOMContentLoaded", function(event) {
+  let node = document.querySelector('#appContent');
+  init(node);
+});
