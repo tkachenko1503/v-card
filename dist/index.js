@@ -20487,7 +20487,7 @@
 	        _react2['default'].createElement(
 	          'h1',
 	          null,
-	          'Hello V-card'
+	          'Hello V-card test'
 	        ),
 	        _react2['default'].createElement(
 	          'h3',
