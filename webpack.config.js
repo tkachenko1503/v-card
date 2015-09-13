@@ -7,7 +7,7 @@ let pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 
 module.exports = {
   entry: [
-    'webpack/hot/dev-server',
+    // 'webpack/hot/dev-server',
     path.resolve(__dirname, "src/index")
   ],
   resolve: {
