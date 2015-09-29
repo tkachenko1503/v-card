@@ -1,0 +1,18 @@
+body {
+  background: #A2DED0;
+}
+
+.layout {
+  width: 100%;
+  display: table;
+  min-height: 500px;
+
+  .layout__coll {
+    display: table-cell;
+    padding: 5px;
+  }
+
+  .layout__caption {
+    display: table-caption;
+  }
+}

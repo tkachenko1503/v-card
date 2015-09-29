@@ -2,11 +2,13 @@ import React from 'react';
 import CanvasUI from './ui/canvas';
 import ControlsUI from './ui/controls';
 
+import './layout.scss';
+
 class Layout extends React.Component {
   render() {
     return (
       <div className="layout">
-        <h1>Hello V-card</h1>
+        <h1 className="layout__caption">Hello V-card</h1>
         <div className="layout__coll">
           <h3>Canvas</h3>
           <CanvasUI></CanvasUI>

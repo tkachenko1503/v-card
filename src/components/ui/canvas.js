@@ -4,14 +4,17 @@ import ShapeUI from './shape';
 
 import Reflux from 'reflux';
 import shapesStore from '../../stores/shapesStore';
+import selectedStore from '../../stores/selectedStore';
 import mixins from 'es6-mixins';
 
 
 export default class CanvasUI extends React.Component {
   constructor() {
     super();
+    
     this.state = {
-      shapes: shapesStore.getShapes()
+      shapes: shapesStore.getShapes(),
+      selected: selectedStore.getSelected()
     };
 
     mixins([Reflux.connect(shapesStore, 'shapes')], this);
@@ -25,7 +28,7 @@ export default class CanvasUI extends React.Component {
     let shapes = this.state.shapes.map(this.renderShape);
 
     return (
-      <Canvas width="500" height="200">
+      <Canvas height="200">
         { shapes }
       </Canvas>
     );

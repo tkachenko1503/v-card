@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './canvas.scss';
+
 class Canvas extends React.Component {
   constructor() {
     super();
@@ -7,8 +9,8 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div>
-        <svg { ...this.props }>
+      <div className="canvas-wrapper">
+        <svg className="canvas-tag" { ...this.props }>
           { this.props.children }
         </svg>
       </div>
