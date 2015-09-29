@@ -1,4 +1,6 @@
 import React from 'react';
+import R from 'ramda';
+
 import Rect from '../dom/rect';
 import Circle from '../dom/circle';
 import Triangle from '../dom/triangle';
@@ -8,6 +10,10 @@ import selecteedActions from '../../actions/selecteedActions';
 export default class ShapeUI extends React.Component {
   constructor() {
     super();
+
+    this.extend = R.merge({
+      onClick: () => { this.selectShape(); }
+    });
   }
 
   selectShape () {
@@ -17,9 +23,7 @@ export default class ShapeUI extends React.Component {
 
   buildShape() {
     let shape = this.props.shape;
-    let params = Object.assign({
-      onClick: () => { this.selectShape(); }
-    }, shape.params);
+    let params = this.extend(shape.params);
     let comp;
 
     switch (shape.type) {
