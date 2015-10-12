@@ -12,19 +12,4 @@ class Rect extends React.Component {
   }
 }
 
-Rect.defaultProps = {
-  x: 50,
-  y: 20,
-  rx: 20,
-  ry: 20,
-  width: 150,
-  height: 150,
-  style: {
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 5,
-    opacity: 0.5
-  }
-};
-
 export default Rect;

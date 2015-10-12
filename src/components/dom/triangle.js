@@ -12,14 +12,4 @@ class Triangle extends React.Component {
   }
 }
 
-Triangle.defaultProps = {
-  points:"125,20 200,170 50,170",
-  style: {
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 5,
-    opacity: 0.5
-  }
-};
-
 export default Triangle;
