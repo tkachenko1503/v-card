@@ -20,6 +20,14 @@ export default Reflux.createStore({
     this.trigger(this._shapes);
   },
 
+  onRemoveShape (id) {
+    let shape = this.getById(id);
+    let index = this._shapes.indexOf(shape);
+
+    this._shapes.splice(index, 1);
+    this.trigger(this._shapes);
+  },
+
   getById (id) {
     if (id && this._shapes.length > 0) {
       return searchById(id, this._shapes);

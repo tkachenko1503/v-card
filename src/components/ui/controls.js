@@ -1,5 +1,6 @@
 import React from 'react';
 import Controls from '../dom/controls';
+import ControlsFactory from '../dom/controlsFactory';
 
 import Actions from '../../actions/controlsActions';
 
@@ -23,7 +24,7 @@ export default class ControlsUI extends React.Component {
     let result = [];
 
     if (shape) {
-      result.push(<span>Current shape: { shape.type }({ shape.id }) </span>);
+      result.push(<ControlsFactory shape={ shape } removeShape={ this.removeShape } />);
     } else {
       result.push(<span>No shape selected!</span>);
     }
@@ -34,6 +35,11 @@ export default class ControlsUI extends React.Component {
   addShape(shape) {
     console.log(`add ${shape}!`);
     Actions.addShape(shape);
+  }
+
+  removeShape(id) {
+    console.log(`remove ${id}`);
+    Actions.removeShape(id);
   }
 
   render() {

@@ -9,11 +9,11 @@ class Layout extends React.Component {
     return (
       <div className="layout">
         <h1 className="layout__caption">Hello V-card</h1>
-        <div className="layout__coll">
+        <div className="layout__coll layout__coll_width_70">
           <h3>Canvas</h3>
           <CanvasUI></CanvasUI>
         </div>
-        <div className="layout__coll">
+        <div className="layout__coll layout__coll_width_30">
           <h3>Controls</h3>
           <ControlsUI></ControlsUI>
         </div>
