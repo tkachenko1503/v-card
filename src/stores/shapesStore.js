@@ -1,6 +1,8 @@
 import Reflux from 'reflux';
-import controlActions from '../actions/controlsActions';
+import R from 'ramda';
 
+import controlActions from '../actions/controlsActions';
+import DEFAULTS from './defaults';
 import {searchById, generateGuid} from '../utils';
 
 export default Reflux.createStore({
@@ -13,10 +15,13 @@ export default Reflux.createStore({
   },
 
   onAddShape (shapeType) {
-    this._shapes.push({
+    let shape = {
+      attrs: DEFAULTS[shapeType],
       type: shapeType,
       id: generateGuid()
-    });
+    };
+
+    this._shapes.push(shape);
     this.trigger(this._shapes);
   },
 

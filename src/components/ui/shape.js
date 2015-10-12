@@ -23,7 +23,7 @@ export default class ShapeUI extends React.Component {
 
   buildShape() {
     let shape = this.props.shape;
-    let params = this.extend(shape.params);
+    let params = this.extend(shape.attrs);
     let comp;
 
     switch (shape.type) {
