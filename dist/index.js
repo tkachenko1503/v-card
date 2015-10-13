@@ -118,11 +118,11 @@
 
 	var _uiCanvas2 = _interopRequireDefault(_uiCanvas);
 
-	var _uiControls = __webpack_require__(42);
+	var _uiControls = __webpack_require__(43);
 
 	var _uiControls2 = _interopRequireDefault(_uiControls);
 
-	__webpack_require__(46);
+	__webpack_require__(48);
 
 	var Layout = (function (_React$Component) {
 	  _inherits(Layout, _React$Component);
@@ -146,7 +146,7 @@
 	        ),
 	        _react2['default'].createElement(
 	          'div',
-	          { className: 'layout__coll' },
+	          { className: 'layout__coll layout__coll_width_70' },
 	          _react2['default'].createElement(
 	            'h3',
 	            null,
@@ -156,7 +156,7 @@
 	        ),
 	        _react2['default'].createElement(
 	          'div',
-	          { className: 'layout__coll' },
+	          { className: 'layout__coll layout__coll_width_30' },
 	          _react2['default'].createElement(
 	            'h3',
 	            null,
@@ -214,11 +214,11 @@
 
 	var _storesShapesStore2 = _interopRequireDefault(_storesShapesStore);
 
-	var _storesSelectedStore = __webpack_require__(40);
+	var _storesSelectedStore = __webpack_require__(41);
 
 	var _storesSelectedStore2 = _interopRequireDefault(_storesSelectedStore);
 
-	var _es6Mixins = __webpack_require__(41);
+	var _es6Mixins = __webpack_require__(42);
 
 	var _es6Mixins2 = _interopRequireDefault(_es6Mixins);
 
@@ -712,7 +712,7 @@
 	    key: 'buildShape',
 	    value: function buildShape() {
 	      var shape = this.props.shape;
-	      var params = this.extend(shape.params);
+	      var params = this.extend(shape.attrs);
 	      var comp = undefined;
 
 	      switch (shape.type) {
@@ -8272,21 +8272,6 @@
 	  return Rect;
 	})(_react2['default'].Component);
 
-	Rect.defaultProps = {
-	  x: 50,
-	  y: 20,
-	  rx: 20,
-	  ry: 20,
-	  width: 150,
-	  height: 150,
-	  style: {
-	    fill: 'red',
-	    stroke: 'black',
-	    strokeWidth: 5,
-	    opacity: 0.5
-	  }
-	};
-
 	exports['default'] = Rect;
 	module.exports = exports['default'];
 
@@ -8333,18 +8318,6 @@
 	  return Circle;
 	})(_react2['default'].Component);
 
-	Circle.defaultProps = {
-	  cx: 125,
-	  cy: 95,
-	  r: 80,
-	  style: {
-	    fill: 'red',
-	    stroke: 'black',
-	    strokeWidth: 5,
-	    opacity: 0.5
-	  }
-	};
-
 	exports['default'] = Circle;
 	module.exports = exports['default'];
 
@@ -8390,16 +8363,6 @@
 
 	  return Triangle;
 	})(_react2['default'].Component);
-
-	Triangle.defaultProps = {
-	  points: "125,20 200,170 50,170",
-	  style: {
-	    fill: 'red',
-	    stroke: 'black',
-	    strokeWidth: 5,
-	    opacity: 0.5
-	  }
-	};
 
 	exports['default'] = Triangle;
 	module.exports = exports['default'];
@@ -10156,11 +10119,19 @@
 
 	var _reflux2 = _interopRequireDefault(_reflux);
 
+	var _ramda = __webpack_require__(11);
+
+	var _ramda2 = _interopRequireDefault(_ramda);
+
 	var _actionsControlsActions = __webpack_require__(38);
 
 	var _actionsControlsActions2 = _interopRequireDefault(_actionsControlsActions);
 
-	var _utils = __webpack_require__(39);
+	var _defaults = __webpack_require__(39);
+
+	var _defaults2 = _interopRequireDefault(_defaults);
+
+	var _utils = __webpack_require__(40);
 
 	exports['default'] = _reflux2['default'].createStore({
 	  _shapes: [],
@@ -10172,10 +10143,21 @@
 	  },
 
 	  onAddShape: function onAddShape(shapeType) {
-	    this._shapes.push({
+	    var shape = {
+	      attrs: _defaults2['default'][shapeType],
 	      type: shapeType,
 	      id: (0, _utils.generateGuid)()
-	    });
+	    };
+
+	    this._shapes.push(shape);
+	    this.trigger(this._shapes);
+	  },
+
+	  onRemoveShape: function onRemoveShape(id) {
+	    var shape = this.getById(id);
+	    var index = this._shapes.indexOf(shape);
+
+	    this._shapes.splice(index, 1);
 	    this.trigger(this._shapes);
 	  },
 
@@ -10203,11 +10185,60 @@
 
 	var _reflux2 = _interopRequireDefault(_reflux);
 
-	exports['default'] = _reflux2['default'].createActions(['addShape']);
+	exports['default'] = _reflux2['default'].createActions(['addShape', 'removeShape']);
 	module.exports = exports['default'];
 
 /***/ },
 /* 39 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  rect: {
+	    x: 50,
+	    y: 20,
+	    rx: 20,
+	    ry: 20,
+	    width: 150,
+	    height: 150,
+	    style: {
+	      fill: 'red',
+	      stroke: 'black',
+	      strokeWidth: 5,
+	      opacity: 0.5
+	    }
+	  },
+
+	  circle: {
+	    cx: 125,
+	    cy: 95,
+	    r: 80,
+	    style: {
+	      fill: 'red',
+	      stroke: 'black',
+	      strokeWidth: 5,
+	      opacity: 0.5
+	    }
+	  },
+
+	  triangle: {
+	    points: "125,20 200,170 50,170",
+	    style: {
+	      fill: 'red',
+	      stroke: 'black',
+	      strokeWidth: 5,
+	      opacity: 0.5
+	    }
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10232,7 +10263,7 @@
 	}
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10256,9 +10287,13 @@
 	var _shapesStore2 = _interopRequireDefault(_shapesStore);
 
 	exports['default'] = _reflux2['default'].createStore({
-	  _selected: {
-	    shape: null,
-	    layer: null
+	  init: function init() {
+	    this._selected = {
+	      shapeId: null,
+	      layer: null
+	    };
+
+	    this.listenTo(_shapesStore2['default'], this.changeSelected);
 	  },
 
 	  listenables: [_actionsSelecteedActions2['default']],
@@ -10267,19 +10302,26 @@
 	    return this._selected;
 	  },
 
+	  changeSelected: function changeSelected() {
+	    var shape = this.getShape();
+	    var id = shape ? shape.id : null;
+
+	    this.onSelectShape(id);
+	  },
+
 	  onSelectShape: function onSelectShape(id) {
-	    this._selected.shape = id;
+	    this._selected.shapeId = id;
 	    this.trigger(this._selected);
 	  },
 
 	  getShape: function getShape() {
-	    return _shapesStore2['default'].getById(this._selected.shape);
+	    return _shapesStore2['default'].getById(this._selected.shapeId);
 	  }
 	});
 	module.exports = exports['default'];
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -10432,7 +10474,7 @@
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10455,9 +10497,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _domControls = __webpack_require__(43);
+	var _domControls = __webpack_require__(44);
 
 	var _domControls2 = _interopRequireDefault(_domControls);
+
+	var _domControlsFactory = __webpack_require__(47);
+
+	var _domControlsFactory2 = _interopRequireDefault(_domControlsFactory);
 
 	var _actionsControlsActions = __webpack_require__(38);
 
@@ -10467,11 +10513,11 @@
 
 	var _reflux2 = _interopRequireDefault(_reflux);
 
-	var _storesSelectedStore = __webpack_require__(40);
+	var _storesSelectedStore = __webpack_require__(41);
 
 	var _storesSelectedStore2 = _interopRequireDefault(_storesSelectedStore);
 
-	var _es6Mixins = __webpack_require__(41);
+	var _es6Mixins = __webpack_require__(42);
 
 	var _es6Mixins2 = _interopRequireDefault(_es6Mixins);
 
@@ -10497,15 +10543,7 @@
 	      var result = [];
 
 	      if (shape) {
-	        result.push(_react2['default'].createElement(
-	          'span',
-	          null,
-	          'Current shape: ',
-	          shape.type,
-	          '(',
-	          shape.id,
-	          ') '
-	        ));
+	        result.push(_react2['default'].createElement(_domControlsFactory2['default'], { shape: shape, removeShape: this.removeShape }));
 	      } else {
 	        result.push(_react2['default'].createElement(
 	          'span',
@@ -10521,6 +10559,12 @@
 	    value: function addShape(shape) {
 	      console.log('add ' + shape + '!');
 	      _actionsControlsActions2['default'].addShape(shape);
+	    }
+	  }, {
+	    key: 'removeShape',
+	    value: function removeShape(id) {
+	      console.log('remove ' + id);
+	      _actionsControlsActions2['default'].removeShape(id);
 	    }
 	  }, {
 	    key: 'render',
@@ -10540,7 +10584,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10563,7 +10607,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(44);
+	__webpack_require__(45);
 
 	var Controls = (function (_React$Component) {
 	  _inherits(Controls, _React$Component);
@@ -10574,6 +10618,7 @@
 	    _classCallCheck(this, Controls);
 
 	    _get(Object.getPrototypeOf(Controls.prototype), 'constructor', this).call(this);
+
 	    this.handleAdd = function (e) {
 	      _this.props.addShape(e.target.dataset.shape);
 	    };
@@ -10588,6 +10633,11 @@
 	        _react2['default'].createElement(
 	          'section',
 	          { className: 'controls__adds' },
+	          _react2['default'].createElement(
+	            'span',
+	            null,
+	            'Add new: '
+	          ),
 	          _react2['default'].createElement(
 	            'button',
 	            { onClick: this.handleAdd, 'data-shape': 'rect' },
@@ -10616,13 +10666,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(45);
+	var content = __webpack_require__(46);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(9)(content, {});
@@ -10642,7 +10692,7 @@
 	}
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(8)();
@@ -10656,13 +10706,83 @@
 
 
 /***/ },
-/* 46 */
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var ControlsFactory = (function (_React$Component) {
+	  _inherits(ControlsFactory, _React$Component);
+
+	  function ControlsFactory() {
+	    _classCallCheck(this, ControlsFactory);
+
+	    _get(Object.getPrototypeOf(ControlsFactory.prototype), "constructor", this).call(this);
+	  }
+
+	  _createClass(ControlsFactory, [{
+	    key: "render",
+	    value: function render() {
+	      var _this = this;
+
+	      return _react2["default"].createElement(
+	        "div",
+	        null,
+	        _react2["default"].createElement(
+	          "div",
+	          { "class": "controls-actions" },
+	          _react2["default"].createElement(
+	            "span",
+	            null,
+	            this.props.shape.type,
+	            " (",
+	            this.props.shape.id.slice(0, 5),
+	            ")"
+	          ),
+	          _react2["default"].createElement(
+	            "button",
+	            { onClick: function () {
+	                _this.props.removeShape(_this.props.shape.id);
+	              } },
+	            "Remove"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ControlsFactory;
+	})(_react2["default"].Component);
+
+	exports["default"] = ControlsFactory;
+	module.exports = exports["default"];
+
+/***/ },
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(47);
+	var content = __webpack_require__(49);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(9)(content, {});
@@ -10682,7 +10802,7 @@
 	}
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(8)();
@@ -10690,7 +10810,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background: #A2DED0; }\n\n.layout {\n  width: 100%;\n  display: table;\n  min-height: 500px; }\n  .layout .layout__coll {\n    display: table-cell;\n    padding: 5px; }\n  .layout .layout__caption {\n    display: table-caption; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #A2DED0; }\n\n.layout {\n  width: 100%;\n  display: table;\n  min-height: 500px; }\n  .layout .layout__coll {\n    display: table-cell;\n    padding: 5px; }\n  .layout .layout__coll_width_70 {\n    width: 70%; }\n  .layout .layout__coll_width_30 {\n    width: 30%; }\n  .layout .layout__caption {\n    display: table-caption; }\n", ""]);
 
 	// exports
 
